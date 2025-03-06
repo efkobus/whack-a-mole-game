@@ -1,39 +1,32 @@
-// JavaScript logic for the Whack-a-Mole game
+// Game state variables and DOM references
+let gameBoard, scoreDisplay, finalScoreDisplay, timerDisplay, startButton, 
+    hitSound, missSound, gameOverSound, modal, playAgainButton, 
+    highScoreMessage, difficultyButtons;
 
-// Select necessary DOM elements
-const gameBoard = document.querySelector('.game-board');
-const scoreDisplay = document.getElementById('score');
-const finalScoreDisplay = document.getElementById('final-score');
-const timerDisplay = document.getElementById('time');
-const startButton = document.getElementById('start-button');
-const hitSound = document.getElementById('hit-sound');
-const missSound = document.getElementById('miss-sound');
-const gameOverSound = document.getElementById('game-over-sound');
-const modal = document.getElementById('game-over-modal');
-const playAgainButton = document.getElementById('play-again-button');
-const highScoreMessage = document.getElementById('high-score-message');
-const difficultyButtons = document.querySelectorAll('.difficulty-button');
-
-// Game variables
+// Game state
 let score = 0;
-let timer = 30; // Game duration in seconds
+let timer = 30;
 let moleInterval;
 let gameActive = false;
-let currentLevel = 1; // Nível atual do jogador (inicia no nível 1)
-let highScore = localStorage.getItem('whackMoleHighScore') || 0;
+let currentLevel = 1;
+let highScore = 0;
 let timerInterval;
 let moleTimeout;
 let consecutiveHits = 0;
+let currentDifficulty = 'easy';
 
-// Configurações de dificuldade
+/**
+ * Game difficulty settings
+ * @type {Object.<string, GameDifficulty>}
+ */
 const difficulties = {
     easy: {
-        baseSpeed: 1200,         // Velocidade base em ms (mais alto = mais lento)
-        speedDecreasePerLevel: 100, // Diminuição de velocidade por nível
-        minSpeed: 800,          // Velocidade mínima
-        maxActiveMoles: 1,       // Máximo de toupeiras ativas no modo fácil
-        levelUpThreshold: 50,    // Pontos necessários para subir de nível
-        timeVisible: 0.8         // Proporção do tempo que a toupeira fica visível
+        baseSpeed: 1200,
+        speedDecreasePerLevel: 100,
+        minSpeed: 800,
+        maxActiveMoles: 1,
+        levelUpThreshold: 50,
+        timeVisible: 0.8
     },
     medium: {
         baseSpeed: 1000,
@@ -53,10 +46,63 @@ const difficulties = {
     }
 };
 
-// Dificuldade atual (padrão: fácil)
-let currentDifficulty = 'easy';
+/**
+ * Initializes the game by setting up DOM references and event listeners
+ */
+function init() {
+    if (typeof window !== 'undefined') {
+        // Initialize DOM references
+        gameBoard = document.querySelector('.game-board');
+        scoreDisplay = document.getElementById('score');
+        finalScoreDisplay = document.getElementById('final-score');
+        timerDisplay = document.getElementById('time');
+        startButton = document.getElementById('start-button');
+        modal = document.getElementById('game-over-modal');
+        playAgainButton = document.getElementById('play-again-button');
+        highScoreMessage = document.getElementById('high-score-message');
+        difficultyButtons = document.querySelectorAll('.difficulty-button');
+        
+        // Initialize audio
+        hitSound = new Audio('sounds/hit.mp3');
+        missSound = new Audio('sounds/miss.mp3');
+        gameOverSound = new Audio('sounds/game-over.mp3');
+        
+        // Initialize game state
+        score = 0;
+        highScore = parseInt(localStorage.getItem('whackMoleHighScore')) || 0;
+        scoreDisplay.textContent = '0';
+        timerDisplay.textContent = '30';
+        
+        // Set up event listeners
+        if (gameBoard) gameBoard.addEventListener('click', whackMole);
+        if (startButton) startButton.addEventListener('click', startGame);
+        if (playAgainButton) {
+            playAgainButton.addEventListener('click', () => {
+                if (modal) modal.style.display = 'none';
+                startGame();
+            });
+        }
+        
+        // Set up difficulty buttons
+        if (difficultyButtons) {
+            difficultyButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const difficulty = button.dataset.difficulty || button.id;
+                    setDifficulty(difficulty);
+                });
+            });
+        }
+        
+        setDifficulty('easy');
+    }
+}
 
 // Function to start/restart the game
+/**
+ * Starts or restarts the game, resetting all necessary game state
+ * @function startGame
+ */
 function startGame() {
     // Reset game state
     score = 0;
@@ -77,20 +123,15 @@ function startGame() {
         button.disabled = true;
     });
     
-    // Add animation to game board
-    gameBoard.style.animation = 'pulse 1s';
-    setTimeout(() => {
-        gameBoard.style.animation = '';
-    }, 1000);
-    
     // Clear any existing intervals and timeouts
     clearInterval(moleInterval);
     clearInterval(timerInterval);
     clearTimeout(moleTimeout);
     
-    // Hide all moles
+    // Hide all moles and reset modal
     const moles = document.querySelectorAll('.mole');
     moles.forEach(mole => mole.classList.remove('active', 'whacked'));
+    if (modal) modal.style.display = 'none';
     
     // Start showing moles at the current difficulty level
     updateMoleInterval();
@@ -100,6 +141,10 @@ function startGame() {
 }
 
 // Function to update the mole interval based on current difficulty and level
+/**
+ * Updates the mole appearance interval based on current difficulty and level
+ * @function updateMoleInterval
+ */
 function updateMoleInterval() {
     clearInterval(moleInterval);
     
@@ -122,12 +167,20 @@ function updateMoleInterval() {
 }
 
 // Function to hide all moles
+/**
+ * Hides all moles on the game board
+ * @function hideMoles
+ */
 function hideMoles() {
     const moles = document.querySelectorAll('.mole');
     moles.forEach(mole => mole.classList.remove('active', 'whacked'));
 }
 
 // Function to show a mole at a random position
+/**
+ * Shows moles at random positions based on current difficulty
+ * @function showMole
+ */
 function showMole() {
     const moles = document.querySelectorAll('.mole');
     const diffSettings = difficulties[currentDifficulty];
@@ -153,6 +206,11 @@ function showMole() {
 }
 
 // Function to handle mole click
+/**
+ * Handles player interaction with moles, updating score and game state
+ * @function whackMole
+ * @param {Event} event - Click event object
+ */
 function whackMole(event) {
     if (!gameActive) return; // Ignore clicks if game is not active
     
@@ -252,6 +310,10 @@ function whackMole(event) {
 }
 
 // Exibir mensagem de novo nível
+/**
+ * Displays level up message and animations
+ * @function showLevelUpMessage
+ */
 function showLevelUpMessage() {
     const levelMessage = document.createElement('div');
     levelMessage.className = 'level-message';
@@ -279,69 +341,92 @@ function showLevelUpMessage() {
 }
 
 // Function to manage the countdown timer
+/**
+ * Manages the game countdown timer
+ * @function countdownTimer
+ */
 function countdownTimer() {
     timerInterval = setInterval(() => {
-        if (timer > 0) {
-            timer--;
-            timerDisplay.textContent = timer;
+        timer--;
+        if (timerDisplay) {
+            timerDisplay.textContent = timer.toString();
             
-            // Visual feedback as time gets lower
+            // Visual feedback for last 10 seconds
             if (timer <= 10) {
                 timerDisplay.style.animation = 'pulse 0.5s infinite';
                 timerDisplay.style.backgroundColor = '#ff6b6b';
             }
-        } else {
+        }
+        
+        if (timer <= 0) {
             clearInterval(timerInterval);
+            gameActive = false;
             endGame();
         }
     }, 1000);
 }
 
 // Function to end the game
+/**
+ * Ends the game, showing final score and updating high score if necessary
+ * @function endGame
+ */
 function endGame() {
-    gameActive = false;
+    // Clear all intervals and timeouts
     clearInterval(moleInterval);
     clearTimeout(moleTimeout);
-    timerDisplay.style.animation = '';
-    startButton.disabled = false;
+    clearInterval(timerInterval);
     
-    // Play game over sound
-    gameOverSound.currentTime = 0;
-    gameOverSound.play();
+    // Reset game state
+    gameActive = false;
     
-    // Check for new high score
-    let isNewHighScore = false;
-    if (score > highScore) {
-        localStorage.setItem('whackMoleHighScore', score);
-        highScore = score;
-        isNewHighScore = true;
-        highScoreMessage.textContent = "🎉 Novo Recorde! 🎉";
-    } else {
-        highScoreMessage.textContent = `Recorde: ${highScore}`;
+    // Re-enable buttons
+    if (startButton) startButton.disabled = false;
+    if (difficultyButtons) {
+        difficultyButtons.forEach(button => button.disabled = false);
     }
     
-    // Set final score in the modal
-    finalScoreDisplay.textContent = score;
-
-    // Update modal difficulty buttons to match current difficulty
-    const modalButtons = modal.querySelectorAll('.difficulty-button');
-    modalButtons.forEach(button => {
-        button.classList.remove('active');
-        if (button.dataset.difficulty === currentDifficulty) {
-            button.classList.add('active');
+    // Stop timer animation
+    if (timerDisplay) {
+        timerDisplay.style.animation = '';
+        timerDisplay.style.backgroundColor = '';
+    }
+    
+    // Handle high score
+    const currentScore = parseInt(score, 10);
+    const currentHighScore = parseInt(localStorage.getItem('whackMoleHighScore')) || 0;
+    
+    if (currentScore > currentHighScore) {
+        highScore = currentScore;
+        localStorage.setItem('whackMoleHighScore', currentScore.toString());
+        if (highScoreMessage) {
+            highScoreMessage.textContent = "🎉 New High Score! 🎉";
         }
-    });
-
-    // Re-enable difficulty buttons
-    difficultyButtons.forEach(button => {
-        button.disabled = false;
-    });
-
-    // Show modal
-    modal.style.display = 'flex';
+    } else if (highScoreMessage) {
+        highScoreMessage.textContent = `High Score: ${currentHighScore}`;
+    }
+    
+    // Update final score and show modal
+    if (finalScoreDisplay) {
+        finalScoreDisplay.textContent = currentScore.toString();
+    }
+    if (modal) {
+        modal.style.display = 'flex';
+    }
+    
+    // Play game over sound
+    if (gameOverSound) {
+        gameOverSound.currentTime = 0;
+        gameOverSound.play().catch(() => {});
+    }
 }
 
 // Função para definir a dificuldade selecionada
+/**
+ * Sets the game difficulty level
+ * @function setDifficulty
+ * @param {string} difficulty - Difficulty level ('easy', 'medium', or 'hard')
+ */
 function setDifficulty(difficulty) {
     // Atualiza a dificuldade atual
     currentDifficulty = difficulty;
@@ -374,35 +459,31 @@ document.querySelectorAll('.difficulty-button').forEach(button => {
     });
 });
 
-// Event listener for mole clicks
-gameBoard.addEventListener('click', whackMole);
-
-// Event listener for start button
-startButton.addEventListener('click', startGame);
-
-// Event listener for play again button
-playAgainButton.addEventListener('click', () => {
-    modal.style.display = 'none';
-    startGame();
-});
-
-// Add keyframe for level transition animation
-const styleSheet = document.styleSheets[0];
-styleSheet.insertRule(`
-@keyframes zoomOut {
-    0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-    100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
-}`, styleSheet.cssRules.length);
-
-// Initialize the game
-function init() {
-    highScore = localStorage.getItem('whackMoleHighScore') || 0;
-    scoreDisplay.textContent = '0';
-    timerDisplay.textContent = '30';
-    
-    // Set default difficulty
-    setDifficulty('easy');
+// Initialize when in browser environment
+if (typeof window !== 'undefined') {
+    window.addEventListener('load', init);
 }
 
-// Call init when the page loads
-window.addEventListener('load', init);
+// Export for testing
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        init,
+        startGame,
+        whackMole,
+        setDifficulty,
+        difficulties,
+        endGame,
+        showMole,
+        hideMoles,
+        updateMoleInterval,
+        countdownTimer,
+        getGameState: () => ({
+            score,
+            timer,
+            gameActive,
+            currentLevel,
+            highScore,
+            currentDifficulty
+        })
+    };
+}

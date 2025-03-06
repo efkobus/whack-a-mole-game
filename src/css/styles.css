@@ -604,3 +604,57 @@ h1 {
     background: linear-gradient(145deg, #45a049, #3d8b3d);
     transform: translateY(-2px);
 }
+
+/* Animations */
+@keyframes zoomIn {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+@keyframes zoomOut {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Score points animation */
+.score-points {
+    position: absolute;
+    font-size: 1.5rem;
+    font-weight: bold;
+    pointer-events: none;
+    animation: floatUp 0.8s ease-out forwards;
+    z-index: 100;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+}
+
+/* Level message styles */
+.level-message {
+    opacity: 0;
+}
+
+.level-message.show {
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}

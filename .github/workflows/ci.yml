@@ -19,21 +19,26 @@ jobs:
         node-version: '16'
 
     - name: Install dependencies
-      run: |
-        npm init -y
-        npm install eslint jest @html-validate/html-validate --save-dev
+      run: npm install
         
+    - name: Run tests
+      run: npm test -- --coverage
+      
+    - name: Upload coverage reports
+      uses: codecov/codecov-action@v3
+      with:
+        directory: ./coverage/
+        fail_ci_if_error: true
+        flags: unittests
+        name: whack-a-mole-coverage
+        verbose: true
+
     - name: Lint JavaScript
       run: |
-        npx eslint --init -y
-        npx eslint ./src/js/*.js
+        npx eslint "./src/js/*.js"
         
     - name: Validate HTML
       run: npx html-validate "./src/**/*.html"
-
-    - name: Run tests (if present)
-      run: npm test
-      continue-on-error: true
 
   deploy:
     needs: build-and-test
