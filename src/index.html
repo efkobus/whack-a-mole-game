@@ -171,6 +171,16 @@
                 </div>
             </div>
         </div>
+        
+        <div class="difficulty-selector">
+            <p>Select difficulty:</p>
+            <div class="difficulty-buttons">
+                <button id="easy" class="difficulty-button active">Easy</button>
+                <button id="medium" class="difficulty-button">Medium</button>
+                <button id="hard" class="difficulty-button">Hard</button>
+            </div>
+        </div>
+        
         <button id="start-button">Start Game</button>
     </div>
     
@@ -180,6 +190,14 @@
             <h2>Game Over!</h2>
             <p>Your score: <span id="final-score">0</span></p>
             <p id="high-score-message"></p>
+            <div class="difficulty-selector">
+                <p>Select difficulty:</p>
+                <div class="difficulty-buttons">
+                    <button id="modal-easy" class="difficulty-button" data-difficulty="easy">Easy</button>
+                    <button id="modal-medium" class="difficulty-button" data-difficulty="medium">Medium</button>
+                    <button id="modal-hard" class="difficulty-button" data-difficulty="hard">Hard</button>
+                </div>
+            </div>
             <button id="play-again-button">Play Again</button>
         </div>
     </div>

@@ -1,0 +1,22 @@
+# <type>: <subject>
+# |<----  Using a maximum of 50 characters  ---->|
+# 
+# <body>
+# |<----  Using a maximum of 72 characters per line  ---->|
+#
+# Types:
+#   feat     (new feature)
+#   fix      (bug fix)
+#   docs     (documentation changes)
+#   style    (formatting, code style changes)
+#   refactor (refactoring production code)
+#   test     (adding tests, refactoring tests)
+#   chore    (updating build tasks, package configs)
+#
+# Example:
+# feat: add high score system to game
+#
+# Implement persistent storage for high scores using localStorage
+# Added sorting and display of top 10 scores
+#
+# Resolves: #123

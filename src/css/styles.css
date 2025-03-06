@@ -494,6 +494,61 @@ h1 {
     100% { transform: translateY(-30px); opacity: 0; }
 }
 
+/* Estilos para o seletor de dificuldade */
+.difficulty-selector {
+    margin-bottom: 20px;
+    background-color: #f8f9fa;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+}
+
+.difficulty-selector p {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.difficulty-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.difficulty-button {
+    padding: 10px 20px;
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1rem;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #f0f0f0;
+    color: #555;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.difficulty-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+}
+
+.difficulty-button.active {
+    background: linear-gradient(145deg, #4CAF50, #45a049);
+    color: white;
+    box-shadow: 0 5px 10px rgba(76, 175, 80, 0.3);
+}
+
+.difficulty-button#medium.active {
+    background: linear-gradient(145deg, #ff9800, #f57c00);
+    box-shadow: 0 5px 10px rgba(255, 152, 0, 0.3);
+}
+
+.difficulty-button#hard.active {
+    background: linear-gradient(145deg, #f44336, #e53935);
+    box-shadow: 0 5px 10px rgba(244, 67, 54, 0.3);
+}
+
 /* Game over modal */
 .modal {
     display: none;
