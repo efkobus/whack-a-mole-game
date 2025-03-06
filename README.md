@@ -27,6 +27,8 @@ A modern, engaging implementation of the classic Whack-a-Mole arcade game built 
    - Progress through levels by reaching score thresholds
 
 4. Game ends after 30 seconds
+   
+![image](https://github.com/user-attachments/assets/3e912574-e8df-4ef1-bcb6-3e11d01518a8)
 
 ## Technical Features 🛠️
 
