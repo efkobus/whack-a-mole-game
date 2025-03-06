@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whack-a-Mole</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Whack-a-Mole</h1>
+        <div class="score-timer">
+            <div class="score">Score: <span id="score">0</span></div>
+            <div class="timer">Time: <span id="time">30</span>s</div>
+        </div>
+        <div class="game-board">
+            <div class="mole" id="mole1">
+                <div class="eyes">
+                    <div class="eye-left"></div>
+                    <div class="eye-right"></div>
+                </div>
+                <div class="nose"></div>
+                <div class="mouth"></div>
+                <div class="teeth"></div>
+                <div class="ear-left"></div>
+                <div class="ear-right"></div>
+                <div class="whiskers">
+                    <div class="whisker left-top"></div>
+                    <div class="whisker left-bottom"></div>
+                    <div class="whisker right-top"></div>
+                    <div class="whisker right-bottom"></div>
+                </div>
+            </div>
+            <div class="mole" id="mole2">
+                <div class="eyes">
+                    <div class="eye-left"></div>
+                    <div class="eye-right"></div>
+                </div>
+                <div class="nose"></div>
+                <div class="mouth"></div>
+                <div class="teeth"></div>
+                <div class="ear-left"></div>
+                <div class="ear-right"></div>
+                <div class="whiskers">
+                    <div class="whisker left-top"></div>
+                    <div class="whisker left-bottom"></div>
+                    <div class="whisker right-top"></div>
+                    <div class="whisker right-bottom"></div>
+                </div>
+            </div>
+            <div class="mole" id="mole3">
+                <div class="eyes">
+                    <div class="eye-left"></div>
+                    <div class="eye-right"></div>
+                </div>
+                <div class="nose"></div>
+                <div class="mouth"></div>
+                <div class="teeth"></div>
+                <div class="ear-left"></div>
+                <div class="ear-right"></div>
+                <div class="whiskers">
+                    <div class="whisker left-top"></div>
+                    <div class="whisker left-bottom"></div>
+                    <div class="whisker right-top"></div>
+                    <div class="whisker right-bottom"></div>
+                </div>
+            </div>
+            <div class="mole" id="mole4">
+                <div class="eyes">
+                    <div class="eye-left"></div>
+                    <div class="eye-right"></div>
+                </div>
+                <div class="nose"></div>
+                <div class="mouth"></div>
+                <div class="teeth"></div>
+                <div class="ear-left"></div>
+                <div class="ear-right"></div>
+                <div class="whiskers">
+                    <div class="whisker left-top"></div>
+                    <div class="whisker left-bottom"></div>
+                    <div class="whisker right-top"></div>
+                    <div class="whisker right-bottom"></div>
+                </div>
+            </div>
+            <div class="mole" id="mole5">
+                <div class="eyes">
+                    <div class="eye-left"></div>
+                    <div class="eye-right"></div>
+                </div>
+                <div class="nose"></div>
+                <div class="mouth"></div>
+                <div class="teeth"></div>
+                <div class="ear-left"></div>
+                <div class="ear-right"></div>
+                <div class="whiskers">
+                    <div class="whisker left-top"></div>
+                    <div class="whisker left-bottom"></div>
+                    <div class="whisker right-top"></div>
+                    <div class="whisker right-bottom"></div>
+                </div>
+            </div>
+            <div class="mole" id="mole6">
+                <div class="eyes">
+                    <div class="eye-left"></div>
+                    <div class="eye-right"></div>
+                </div>
+                <div class="nose"></div>
+                <div class="mouth"></div>
+                <div class="teeth"></div>
+                <div class="ear-left"></div>
+                <div class="ear-right"></div>
+                <div class="whiskers">
+                    <div class="whisker left-top"></div>
+                    <div class="whisker left-bottom"></div>
+                    <div class="whisker right-top"></div>
+                    <div class="whisker right-bottom"></div>
+                </div>
+            </div>
+            <div class="mole" id="mole7">
+                <div class="eyes">
+                    <div class="eye-left"></div>
+                    <div class="eye-right"></div>
+                </div>
+                <div class="nose"></div>
+                <div class="mouth"></div>
+                <div class="teeth"></div>
+                <div class="ear-left"></div>
+                <div class="ear-right"></div>
+                <div class="whiskers">
+                    <div class="whisker left-top"></div>
+                    <div class="whisker left-bottom"></div>
+                    <div class="whisker right-top"></div>
+                    <div class="whisker right-bottom"></div>
+                </div>
+            </div>
+            <div class="mole" id="mole8">
+                <div class="eyes">
+                    <div class="eye-left"></div>
+                    <div class="eye-right"></div>
+                </div>
+                <div class="nose"></div>
+                <div class="mouth"></div>
+                <div class="teeth"></div>
+                <div class="ear-left"></div>
+                <div class="ear-right"></div>
+                <div class="whiskers">
+                    <div class="whisker left-top"></div>
+                    <div class="whisker left-bottom"></div>
+                    <div class="whisker right-top"></div>
+                    <div class="whisker right-bottom"></div>
+                </div>
+            </div>
+            <div class="mole" id="mole9">
+                <div class="eyes">
+                    <div class="eye-left"></div>
+                    <div class="eye-right"></div>
+                </div>
+                <div class="nose"></div>
+                <div class="mouth"></div>
+                <div class="teeth"></div>
+                <div class="ear-left"></div>
+                <div class="ear-right"></div>
+                <div class="whiskers">
+                    <div class="whisker left-top"></div>
+                    <div class="whisker left-bottom"></div>
+                    <div class="whisker right-top"></div>
+                    <div class="whisker right-bottom"></div>
+                </div>
+            </div>
+        </div>
+        <button id="start-button">Start Game</button>
+    </div>
+    
+    <!-- Game Over Modal -->
+    <div class="modal" id="game-over-modal">
+        <div class="modal-content">
+            <h2>Game Over!</h2>
+            <p>Your score: <span id="final-score">0</span></p>
+            <p id="high-score-message"></p>
+            <button id="play-again-button">Play Again</button>
+        </div>
+    </div>
+    
+    <!-- Audio elements -->
+    <audio id="hit-sound" src="sounds/hit.mp3" preload="auto"></audio>
+    <audio id="miss-sound" src="sounds/miss.mp3" preload="auto"></audio>
+    <audio id="game-over-sound" src="sounds/game-over.mp3" preload="auto"></audio>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
