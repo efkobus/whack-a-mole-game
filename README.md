@@ -18,6 +18,8 @@ This is a simple Whack-a-Mole game built using HTML, CSS, and JavaScript. The ga
 3. The game lasts for a set time (e.g., 30 seconds). Try to score as many points as possible before time runs out.
 4. Once the timer ends, the game will stop, and your final score will be displayed.
 5. Click the "Restart Game" button to play again.
+   ![image](https://github.com/user-attachments/assets/9e901a4e-685c-411d-a8b2-89baa709a269)
+
 
 ## Setup Instructions
 1. Clone the repository or download the project files.
